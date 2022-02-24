@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<title>Калькулятор</title>
+
+	<style type="text/css">
+		/*задаём общие параметры для всей страницы: шрифт и отступы*/
+		body {
+		  text-align: center;
+		  margin: 10;
+		  font-family: Verdana, Arial, sans-serif;
+		  font-size: 16px;
+		}
+		/* настраиваем внешний вид полей ввода*/
+		input {
+		  display: inline-block;
+		  margin: 20px auto;
+		  border: 2px solid #eee;
+		  padding: 10px 20px;
+		  font-family: Verdana, Arial, sans-serif;
+		  font-size: 16px;
+		}
+		/* внешний вид кнопок */
+		button{
+		  font-family: Verdana, Arial, sans-serif;
+		  font-size: 16px;
+		  margin: 10px;
+		  padding: 10px;
+		}
+		/* стиль подсветки выбранной операции */
+		.light{
+			background-color: yellow;
+		}
+	</style>
+
+</head>
+<body>
+
+	<!-- заголовок -->
+	<h1>Калькулятор</h1>
+	<!-- поле ввода первого числа -->
+	<input id="num1" />
+
+	<!-- блок с кнопками -->
+	<div id="operator_btns">
+	  <button id="plus" onclick="sel_ligth('plus')">+</button>
+	  <button id="minus" onclick="sel_ligth('minus')">-</button>
+	  <button id="times" onclick="sel_ligth('times')">x</button>
+	  <button id="divide" onclick="sel_ligth('divide')">:</button>
+	</div>
+
+	<!-- поле ввода второго числа -->
+	<input id="num2" />
+	<br>
+
+	<!-- кнопка для расчётов -->
+	<button onclick="func()">Посчитать</button>
+
+	<!-- здесь будет результат -->
+	<p id="result"></p>
+
+	<!-- наш скрипт -->
+	<script>
+	  // переменная, в которой хранится выбранное математическое действие
+	  var op; 
+
+	  // функция, которая подсветит выбранное математическое действие
+	  function sel_ligth(sel_id) {
+	  	// убираем класс подсветки со всех кнопок
+	  	document.getElementById("plus").classList.remove("light");
+	  	document.getElementById("minus").classList.remove("light");
+	  	document.getElementById("times").classList.remove("light");
+	  	document.getElementById("divide").classList.remove("light");
+
+	  	// и добавляем его только к нажатой
+	  	document.getElementById(sel_id).classList.add("light");
+
+	  	// в зависимости от нажатой клавиши меняем значение переменной op
+	  	switch (sel_id) {
+	  	  case "plus":
+	  	    op = "+"
+	  	    break;
+	  	  case 'minus':
+	  	    op = '-'
+	  	    break;
+	  	  case 'times':
+	  	    op = "*"
+	  	    break;
+	  	  case 'divide':
+	  	    op = "/"
+	  	    break;
+	  	}
+	  }
+
+	  // добавляем обработчик нажатия на клавиши ко второму полю ввода
+      document.getElementById("num2").addEventListener('keydown', function(e) {
+		if (e.keyCode === 13) {
+		  func();
+		}
+	  });
+	  
+	  // функция расчёта
+	  function func() {
+	  	// переменная для результата
+	    var result;
+	    // получаем первое и второе число
+	    var num1 = Number(document.getElementById("num1").value);
+	    var num2 = Number(document.getElementById("num2").value);
+	    // смотрим, что было в переменной с действием, и действуем исходя из этого
+	    switch (op) {
+	      case '+':
+	        result = num1 + num2;
+	        sel = document.getElementById("plus").classList;
+	        sel.add("light");
+	        break;
+	      case '-':
+	        result = num1 - num2;
+	        break;
+	      case '*':
+	        result = num1 * num2;
+	        break;
+	      case '/':
+	        result = num1 / num2;
+	        break;
+	    }
+
+	    // отправляем результат на страницу
+	    document.getElementById("result").innerHTML = result;
+	  }
+	</script>
+
+</body>
+</html>
